@@ -1,80 +1,117 @@
-/* This is the style sheet for the patientDashboard.html */
-  .card-actions {
-    background-color: #244557;
-    padding: 10px;
-    text-align: center;
-  }
+/* Patient Dashboard Specific Styles */
 
-  .card-actions:hover{
-    background-color: #1c3745;
-  }
-  .ripple-overlay {
+/* Filter Layout overrides */
+.filter-wrapper {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.searchBar {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Card Actions styling (Book Now buttons container) */
+.card-actions {
+    background-color: #0f172a; /* Dark background */
+    color: #ffffff;
+    text-align: center;
+    padding: 1rem;
+    margin: 1rem -1.5rem -1.5rem -1.5rem; /* Offset the padding of .doctor-card */
+    border-radius: 0 0 1rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-actions:hover {
+    background-color: #020617; /* Darken slightly */
+}
+
+/* Ripple Overlay for visual feedback */
+.ripple-overlay {
     position: fixed;
+    top: 50%;
+    left: 50%;
     width: 20px;
     height: 20px;
-    background-color: #1c3745;
+    background-color: rgba(2, 132, 199, 0.3);
     border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    pointer-events: none;
     z-index: 9999;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 1s ease-out, opacity 1s ease;
-  }
-  
-  .ripple-overlay.active {
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease-out;
+}
+
+.ripple-overlay.active {
     transform: translate(-50%, -50%) scale(150);
     opacity: 1;
-  }
-  
-  .modalApp {
-    position: fixed;
-  bottom: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50%;
-  background: #fff;
-  padding: 20px;
-  z-index: 10000;
-  transition: bottom 1.5s ease-in;
-  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 10px 10px 0 0;
-  text-align: center;
-  }
-  
-  .modalApp.active {
-    bottom: 0;
-  }
-  
-  .modalApp h2 {
-    margin-top: 20px;
-  }
-  
-  .modalApp input {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 90%;
-    margin-bottom: 40px;
-  }
+}
 
-  .modalApp select {
+/* Bottom Pop-Up Modal for Booking */
+.modalApp {
+    position: fixed;
+    bottom: -100%; /* Hidden off-screen initially */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    border-radius: 1.5rem 1.5rem 0 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: bottom 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.modalApp.active {
+    bottom: 0; /* Slide in */
+}
+
+/* Form Fields Inside Modal */
+.modalApp input,
+.modalApp select {
     display: block;
-    margin: 10px auto;
-    padding: 10px;
     width: 90%;
-    margin-bottom: 40px;
-  }
-  
-  .confirm-booking {
-    padding: 10px 20px;
-    background: #1c3745;
-    color: #fff;
+    margin: 0 auto 1.25rem auto; /* Centered, fixed width, vertical spacing */
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    color: #0f172a;
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+.modalApp input:focus,
+.modalApp select:focus {
+    outline: none;
+    border-color: #0284c7;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+}
+
+/* Booking Confirmation Button */
+.booking-btn {
+    display: block;
+    width: 90%;
+    margin: 1.5rem auto 0 auto;
+    background-color: #0f172a; /* Dark theme match */
+    color: #ffffff;
+    padding: 1rem;
+    border-radius: 0.75rem;
     border: none;
+    font-size: 1.1rem;
+    font-weight: 500;
     cursor: pointer;
-    
-  
-    
-  }
-  .confirm-booking:hover {
-    filter: brightness(1.2);
-    background-color: #1c3745;
-  }
-  
+    transition: filter 0.2s ease;
+}
+
+.booking-btn:hover {
+    filter: brightness(1.2); /* Slight brightness increase for feedback */
+}
