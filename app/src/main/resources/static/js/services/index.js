@@ -56,3 +56,108 @@
     - Log the error to the console
     - Show a generic error message
 */
+
+import { openModal } from '../components/modals.js';
+import { API_BASE_URL } from '../config/config.js';
+
+const ADMIN_API = API_BASE_URL + '/admin';
+const DOCTOR_API = API_BASE_URL + '/doctor/login';
+
+window.onload = function () {
+    const adminBtn = document.getElementById('adminLogin');
+    if (adminBtn) {
+        adminBtn.addEventListener('click', () => {
+            openModal('adminLogin');
+        });
+    }
+
+    const doctorBtn = document.getElementById('doctorLogin');
+    if (doctorBtn) {
+        doctorBtn.addEventListener('click', () => {
+            openModal('doctorLogin');
+        });
+    }
+};
+
+window.adminLoginHandler = async function () {
+    const usernameInput = document.getElementById('adminUsername');
+    const passwordInput = document.getElementById('adminPassword');
+    
+    if (!usernameInput || !passwordInput) {
+        console.error("Admin login input elements are missing in the DOM");
+        return;
+    }
+
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+    const admin = { username, password };
+
+    try {
+        const response = await fetch(ADMIN_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(admin)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            // Fallback in case token structure varies
+            const token = data.token || data.message || "admin_auth_success";
+            localStorage.setItem("token", token);
+            
+            if (typeof selectRole === "function") {
+                selectRole('admin');
+            } else {
+                console.warn("selectRole function not found, handling redirect fallback.");
+                localStorage.setItem("userRole", "admin");
+                window.location.href = "/templates/admin/adminDashboard.html";
+            }
+        } else {
+            alert("Invalid credentials!");
+        }
+    } catch (error) {
+        console.error("Admin login error:", error);
+        alert("An unexpected error occurred during admin login. Please try again.");
+    }
+};
+
+window.doctorLoginHandler = async function () {
+    const emailInput = document.getElementById('doctorEmail');
+    const passwordInput = document.getElementById('doctorPassword');
+    
+    if (!emailInput || !passwordInput) {
+        console.error("Doctor login input elements are missing in the DOM");
+        return;
+    }
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+    const doctor = { email, password };
+
+    try {
+        const response = await fetch(DOCTOR_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(doctor)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const token = data.token || data.message || "doctor_auth_success";
+            localStorage.setItem("token", token);
+            
+            if (typeof selectRole === "function") {
+                selectRole('doctor');
+            } else {
+                console.warn("selectRole function not found, handling redirect fallback.");
+                localStorage.setItem("userRole", "doctor");
+                window.location.href = "/templates/doctor/doctorDashboard.html";
+            }
+        } else {
+            alert("Invalid credentials!");
+        }
+    } catch (error) {
+        console.error("Doctor login error:", error);
+        alert("An unexpected error occurred during doctor login. Please try again.");
+    }
+};
