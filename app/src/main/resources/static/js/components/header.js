@@ -22,7 +22,7 @@ function renderHeader() {
     // Prepare Header Content
     let headerContent = `
         <header class="header">
-            <img src="/assets/images/logo/logo.png" alt="Smart Clinic Logo" class="logo" onerror="this.src='../assets/images/logo/logo.png'">
+            <img src="/assets/images/logo/logo.png" alt="Smart Clinic Logo" class="logo-img" onerror="this.src='../assets/images/logo/logo.png'">
             <div class="header-nav">
     `;
 
@@ -89,7 +89,8 @@ function attachHeaderButtonListeners() {
         homeBtn.addEventListener("click", () => {
             const role = localStorage.getItem("userRole");
             if (role === "doctor") {
-                window.location.href = "/doctor/dashboard";
+                const token = localStorage.getItem("token");
+                window.location.href = `/doctorDashboard/${token}`;
             } else if (role === "loggedPatient") {
                 window.location.href = "/pages/patientDashboard.html";
             } else {

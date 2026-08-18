@@ -38,6 +38,12 @@ public class Patient {
     @Size(max = 255, message = "Address must be at most 255 characters")
     private String address;
 
+    @NotNull(message = "Age cannot be null")
+    private Integer age;
+
+    @NotNull(message = "Gender cannot be null")
+    private String gender;
+
     public Patient() {
     }
 
@@ -87,5 +93,21 @@ public class Patient {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

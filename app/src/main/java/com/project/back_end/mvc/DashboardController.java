@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import java.util.Map;
 import com.project.back_end.services.Service;
 
 @Controller
@@ -29,8 +28,8 @@ public class DashboardController {
 //    - If invalid, redirects to the root URL, likely the login or home page.
     @GetMapping("/adminDashboard/{token}")
     public String adminDashboard(@PathVariable String token) {
-        Map<String, String> validationResult = sharedService.validateToken(token, "admin");
-        if (validationResult != null && validationResult.isEmpty()) {
+        var validationResponse = sharedService.validateToken(token, "admin");
+        if (validationResponse.getStatusCode().is2xxSuccessful()) {
             return "admin/adminDashboard";
         }
         return "redirect:/";
@@ -44,8 +43,8 @@ public class DashboardController {
 //    - If the token is invalid, redirects to the root URL.
     @GetMapping("/doctorDashboard/{token}")
     public String doctorDashboard(@PathVariable String token) {
-        Map<String, String> validationResult = sharedService.validateToken(token, "doctor");
-        if (validationResult != null && validationResult.isEmpty()) {
+        var validationResponse = sharedService.validateToken(token, "doctor");
+        if (validationResponse.getStatusCode().is2xxSuccessful()) {
             return "doctor/doctorDashboard";
         }
         return "redirect:/";

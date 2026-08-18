@@ -1,8 +1,6 @@
 import { deleteDoctor } from '../services/doctorServices.js';
 import { getPatientData } from '../services/patientServices.js';
-// We assume showBookingOverlay is exported from modals.js or similar
-import { showBookingOverlay } from './modals.js';
-
+// showBookingOverlay is loaded globally in patient pages
 export function createDoctorCard(doctor) {
     const card = document.createElement("div");
     card.classList.add("doctor-card");
@@ -78,10 +76,10 @@ export function createDoctorCard(doctor) {
             try {
                 const patientData = await getPatientData(token);
                 // Dynamically load/trigger the overlay
-                if (typeof showBookingOverlay === "function") {
-                    showBookingOverlay(e, doctor, patientData);
+                if (typeof window.showBookingOverlay === "function") {
+                    window.showBookingOverlay(e, doctor, patientData);
                 } else {
-                    console.error("showBookingOverlay is not defined.");
+                    console.error("window.showBookingOverlay is not defined.");
                 }
             } catch (error) {
                 console.error("Error fetching patient data for booking:", error);

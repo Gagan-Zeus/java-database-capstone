@@ -12,20 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("patientSignup");
-  if (btn) {
-    btn.addEventListener("click", () => openModal("patientSignup"));
-  }
+  document.body.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'signupBtn') {
+          openModal('patientSignup');
+      } else if (e.target && e.target.id === 'loginBtn') {
+          openModal('patientLogin');
+      }
+  });
 });
-
-document.addEventListener("DOMContentLoaded", () => {
-  const loginBtn = document.getElementById("patientLogin")
-  if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
-      openModal("patientLogin")
-    })
-  }
-})
 
 function loadDoctorCards() {
   getDoctors()
@@ -89,8 +83,15 @@ window.signupPatient = async function () {
     const password = document.getElementById("password").value;
     const phone = document.getElementById("phone").value;
     const address = document.getElementById("address").value;
+    const age = parseInt(document.getElementById("age").value);
+    const gender = document.getElementById("gender").value;
 
-    const data = { name, email, password, phone, address };
+    if (!name || !email || !password || !phone || !address || !age || !gender) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    const data = { name, email, password, phone, address, age, gender };
     const { success, message } = await patientSignup(data);
     if (success) {
       alert(message);

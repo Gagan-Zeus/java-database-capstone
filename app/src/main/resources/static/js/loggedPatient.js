@@ -25,7 +25,7 @@ function loadDoctorCards() {
     });
 }
 
-export function showBookingOverlay(e, doctor, patient) {
+window.showBookingOverlay = function showBookingOverlay(e, doctor, patient) {
   const button = e.target;
   const rect = button.getBoundingClientRect();
   console.log(patient.name)

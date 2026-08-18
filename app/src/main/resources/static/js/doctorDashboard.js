@@ -143,7 +143,7 @@ async function loadAppointments() {
                 status: appointment.status
             };
 
-            const row = createPatientRow(patientObj);
+            const row = createPatientRow(patientObj, patientObj.appointmentId, appointment.doctorId);
             if (row) {
                 patientTableBody.appendChild(row);
             }
